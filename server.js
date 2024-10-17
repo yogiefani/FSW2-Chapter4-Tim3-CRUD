@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const EJSLayouts = require("express-ejs-layouts");
+const methodOverride = require('method-override');
 
 // Import routes
 const userRoute = require("./routes/userRoute");
@@ -12,6 +13,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(morgan());
 
@@ -40,7 +42,10 @@ app.set("view engine", "ejs");
 app.use(EJSLayouts);
 app.set("layout", "layouts/template");
 
-app.use("/users", userRoute);
+// Configure method-override to use _method query parameter
+app.use(methodOverride('_method'));
+
+app.use("/dashboard", userRoute);
 
 // Middleware to handle page not found
 app.use((req, res, next) => {
