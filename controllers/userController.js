@@ -3,17 +3,12 @@ const { user } = require("../models");
 const getAllUsers = async (req, res) => {
     try {
         const users = await user.findAll();
-        res.status(200).json({
-            status: "Succeed",
-            message: "Get all users successfully",
-            isSuccess: true,
-            data: users,
+        res.render("users/index", {
+            title: "Dashboard Admin",
+            users,
         });
     } catch (err) {
-        res.status(500).json({
-            status: "Failed",
-            message: "Internal server error",
-            isSuccess: false,
+        res.render("error", {
             error: err.message,
         });
     }
@@ -22,56 +17,44 @@ const getAllUsers = async (req, res) => {
 async function getUserById(req, res) {
     const id = req.params.id;
     try {
-        const user = await user.findByPk(id);
-        if (!user) {
-            return res.status(404).json({
-                status: "Failed",
-                message: "Can't find spesific id user",
-                isSuccess: false,
-                data: null,
-            });
-        }
-        res.status(200).json({
-            status: "Success",
-            message: "Successfully obtained user data",
-            isSuccess: true,
-            data: { user },
+        const User = await user.findByPk(id);
+        res.render("users/detail", {
+            title: `User Profile ${User.name}`,
+            User,
+            layout: "layouts/template",
         });
-    } catch (error) {
-        res.status(500).json({
-            status: "Failed",
-            message: "Failed to get user data",
-            isSuccess: false,
-            data: null,
-            error: error.message,
+    } catch (err) {
+        res.render("error", {
+            title: "Error",
+            error: err.message,
+            layout: "layouts/template",
         });
     }
 }
 
 const createUser = async (req, res) => {
-    try{
-        const { name, email, phone, photoProfile } = req.body
+    try {
+        const { name, email, phoneNumber, photoProfile } = req.body;
 
-        if(!name || !email || !phone || !photoProfile){
+        if (!name || !email || !phoneNumber || !photoProfile) {
             return res.status(404).json({
                 status: false,
-                "message": "name, email, phone, or photoProfile are required!"
-            })
+                message: "name, email, phone, or photoProfile are required!",
+            });
         }
 
         const newUser = await user.create({
             name,
             email,
-            phone,
-            photoProfile
-        })
+            phoneNumber,
+            photoProfile,
+        });
 
         return res.status(201).json({
             status: true,
             message: "Create New User Successfully!",
-            data: newUser
-        })
-
+            data: newUser,
+        });
     } catch (err) {
         return res.status(500).json({
             status: false,
@@ -79,12 +62,12 @@ const createUser = async (req, res) => {
             error: err.message,
         });
     }
-}
+};
 
 const updateUser = async (req, res) => {
-    try{
-        const getId = req.params.id
-        const {name, email, phone, photoProfile} = req.body
+    try {
+        const getId = req.params.id;
+        const { name, email, phoneNumber, photoProfile } = req.body;
 
         const userToUpdate = await user.findByPk(getId);
 
@@ -98,16 +81,15 @@ const updateUser = async (req, res) => {
         const updateUser = await userToUpdate.update({
             name,
             email,
-            phone,
-            photoProfile
-        })
+            phoneNumber,
+            photoProfile,
+        });
 
         res.status(200).json({
             status: true,
             message: "Update User Successfully!",
-            data: updateUser
+            data: updateUser,
         });
-
     } catch (err) {
         return res.status(500).json({
             status: false,
@@ -115,29 +97,24 @@ const updateUser = async (req, res) => {
             error: err.message,
         });
     }
-}
+};
 
 async function deleteUser(req, res) {
     const id = req.params.id;
     try {
-        const user = await user.findByPk(id);
-        if (!user) {
+        const User = await user.findByPk(id);
+        if (!User) {
             return res.status(404).json({
                 status: "Failed",
-                message: "Can't find spesific id user",
+                message: "Can't find specific id user",
                 isSuccess: false,
                 data: null,
             });
         }
 
-        await user.destroy();
+        await User.destroy();
 
-        res.status(200).json({
-            status: "Success",
-            message: "Successfully delete user data",
-            isSuccess: true,
-            data: { user },
-        });
+        res.redirect("/dashboard?deleted=success");
     } catch (error) {
         res.status(500).json({
             status: "Failed",
@@ -149,4 +126,10 @@ async function deleteUser(req, res) {
     }
 }
 
-module.exports = { getAllUsers, getUserById, createUser, updateUser, deleteUser };
+module.exports = {
+    getAllUsers,
+    getUserById,
+    createUser,
+    updateUser,
+    deleteUser,
+};
