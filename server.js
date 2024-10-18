@@ -41,6 +41,7 @@ app.use(EJSLayouts);
 app.set("layout", "layouts/template");
 
 app.use("/users", userRoute);
+app.use("/projects", projectRoute);
 
 // Middleware to handle page not found
 app.use((req, res, next) => {
