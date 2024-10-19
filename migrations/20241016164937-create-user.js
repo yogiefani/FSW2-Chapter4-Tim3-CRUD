@@ -24,7 +24,10 @@ module.exports = {
         unique: true 
       },
       photoProfile: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        validate: {
+          isUrl: true 
+        }
       },
       createdAt: {
         allowNull: false,
