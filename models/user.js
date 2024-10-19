@@ -21,13 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       email: {
-        email: {
-          type: DataTypes.STRING,
-          allowNull: false,
-          unique: true,
-          validate: {
-            isEmail: true,
-          },
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true,
         },
       },
       phoneNumber: {
@@ -35,8 +33,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          isNumeric: true, 
-          len: [10, 15], 
+          isNumeric: true,
+          len: [10, 15],
         },
       },
       photoProfile: DataTypes.TEXT,
