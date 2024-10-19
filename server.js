@@ -5,6 +5,7 @@ const EJSLayouts = require("express-ejs-layouts");
 
 // Import routes
 const userRoute = require("./routes/userRoute");
+const projectRoute = require("./routes/projectRoute");
 
 dotenv.config();
 
