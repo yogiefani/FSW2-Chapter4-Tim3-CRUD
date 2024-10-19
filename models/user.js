@@ -37,7 +37,12 @@ module.exports = (sequelize, DataTypes) => {
           len: [10, 15],
         },
       },
-      photoProfile: DataTypes.TEXT,
+      photoProfile: {
+        type: DataTypes.TEXT,
+        validate: {
+          isUrl: true,
+        },
+      },
     },
     {
       sequelize,
