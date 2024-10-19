@@ -5,6 +5,7 @@ const EJSLayouts = require("express-ejs-layouts");
 
 // Import routes
 const userRoute = require("./routes/userRoute");
+const roleRoute = require("./routes/roleRoute");
 
 dotenv.config();
 
@@ -17,20 +18,20 @@ app.use(morgan());
 
 // Health Check
 app.get("/", async (req, res) => {
-    try {
-        res.status(200).json({
-            status: "Succeed",
-            message: "Ping successfully",
-            isSuccess: true,
-        });
-    } catch (error) {
-        res.status(500).json({
-            status: "Failed",
-            message: "Ping failed",
-            isSuccess: false,
-            error: error.message,
-        });
-    }
+  try {
+    res.status(200).json({
+      status: "Succeed",
+      message: "Ping successfully",
+      isSuccess: true,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "Failed",
+      message: "Ping failed",
+      isSuccess: false,
+      error: error.message,
+    });
+  }
 });
 
 app.use(express.static(`${__dirname}/public`));
@@ -41,16 +42,17 @@ app.use(EJSLayouts);
 app.set("layout", "layouts/template");
 
 app.use("/users", userRoute);
+app.use("/roles", roleRoute);
 
 // Middleware to handle page not found
 app.use((req, res, next) => {
-    res.status(404).json({
-        status: "Failed",
-        message: "API not found !",
-        isSuccess: false,
-    });
+  res.status(404).json({
+    status: "Failed",
+    message: "API not found !",
+    isSuccess: false,
+  });
 });
 
 app.listen(port, () => {
-    console.log(`App running on http://localhost:${port}`);
+  console.log(`App running on http://localhost:${port}`);
 });
