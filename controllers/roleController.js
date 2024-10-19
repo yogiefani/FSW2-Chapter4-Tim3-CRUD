@@ -48,6 +48,36 @@ async function getRoleById(req, res) {
   }
 }
 
+const createRole = async (req, res) => {
+  try {
+    const { name, description } = req.body;
+
+    if (!name || description) {
+      return res.status(404).json({
+        status: false,
+        message: "name, description!",
+      });
+    }
+
+    const newRole = await role.create({
+      name,
+      description,
+    });
+
+    return res.status(201).json({
+      status: true,
+      message: "Create New Role Successfully!",
+      data: newRole,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: false,
+      message: "An error occurred while fetching roles",
+      error: err.message,
+    });
+  }
+};
+
 async function deleteRole(req, res) {
   const id = req.params.id;
   try {
@@ -80,4 +110,4 @@ async function deleteRole(req, res) {
   }
 }
 
-module.exports = { getAllRoles, getRoleById, deleteRole };
+module.exports = { getAllRoles, getRoleById, createRole, deleteRole };
