@@ -26,7 +26,7 @@ async function getUserById(req, res) {
     } catch (err) {
         res.render("error", {
             title: "Error",
-            error: err.message,
+            error: "Cannot find user data",
             layout: "layouts/template",
         });
     }

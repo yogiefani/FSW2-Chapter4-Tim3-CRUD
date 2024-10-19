@@ -47,12 +47,11 @@ app.use(methodOverride('_method'));
 
 app.use("/dashboard", userRoute);
 
-// Middleware to handle page not found
+// Middleware to handle page not found and redirect to /error
 app.use((req, res, next) => {
-    res.status(404).json({
-        status: "Failed",
-        message: "API not found !",
-        isSuccess: false,
+    res.status(404).render('error', {
+        title: 'Error',
+        error: '404 Page not found',
     });
 });
 
