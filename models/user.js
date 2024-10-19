@@ -32,7 +32,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       phoneNumber: {
         type: DataTypes.STRING,
+        allowNull: false,
         unique: true,
+        validate: {
+          isNumeric: true, 
+          len: [10, 15], 
+        },
       },
       photoProfile: DataTypes.TEXT,
     },
