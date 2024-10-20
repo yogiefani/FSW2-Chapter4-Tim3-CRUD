@@ -16,7 +16,11 @@
       <h5 class="card-title">Edit User Info</h5>
 
       <!-- Form for updating userData profile -->
-      <form action="/dashboard/<%= userData.id %>/edit?_method=PATCH" method="POST" enctype="multipart/form-data">
+      <form
+        action="/dashboard/<%= userData.id %>/edit?_method=PATCH"
+        method="POST"
+        enctype="multipart/form-data"
+      >
         <!-- Pre-filled Name input -->
         <div class="mb-3">
           <label for="name" class="form-label">Name</label>
@@ -69,6 +73,14 @@
             accept="image/*"
           />
         </div>
+        <div class="mb-3">
+          <label for="roleId" class="form-label">Role</label>
+          <select class="form-control" id="roleId" name="roleId" required>
+            <option value="" disabled>Select a role</option>
+            <!-- Placeholder option -->
+          </select>
+          <div class="invalid-feedback">Role is required.</div>
+        </div>
 
         <!-- Submit button -->
         <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -76,3 +88,44 @@
     </div>
   </div>
 </div>
+
+<script>
+  async function fetchRoles() {
+      try {
+          const response = await fetch('/roles/'); 
+          
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          
+          const roles = await response.json(); 
+          
+          // Assuming userData.roleId is a string
+          const currentUserRoleId = "<%= userData.roleId %>"; // If roleId is a string
+
+  
+          console.log('Current User Role ID:', currentUserRoleId); // Debugging output
+          console.log('Roles:', roles); // Debugging output
+  
+          const roleSelect = document.getElementById('roleId');
+          roles.forEach(role => {
+              const option = document.createElement('option');
+              option.value = role.id; 
+              option.textContent = role.name; 
+              
+              // Set selected option if it matches the user's current role
+              if (role.id == currentUserRoleId) {
+                  option.selected = true; 
+                  console.log(`Selected role: ${role.name}`); // Debugging output
+              }
+  
+              roleSelect.appendChild(option);
+          });
+      } catch (error) {
+          console.error('Error fetching roles:', error);
+      }
+  }
+  
+  window.onload = fetchRoles;
+  </script>
+  
