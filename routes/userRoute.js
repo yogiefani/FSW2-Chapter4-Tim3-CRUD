@@ -8,4 +8,7 @@ router.post('/', userController.createUser);
 router.patch('/:id/edit', userController.updateUser);
 router.delete('/:id', userController.deleteUser);
 
+// router.get('/update/:id', taskController.updateTaskPage);
+router.get('/create', userController.createUserPage);
+
 module.exports = router;
