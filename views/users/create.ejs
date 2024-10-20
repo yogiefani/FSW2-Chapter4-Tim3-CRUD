@@ -8,7 +8,7 @@
     <div class="row g-5 justify-content-center">
       <div class="col-md-8 form-card">
         <h4 class="mb-3">New User Form</h4>
-        <form action="/dashboard" method="POST" enctype="multipart/form-data">
+        <form action="/" method="POST" enctype="multipart/form-data">
           <div class="row g-3">
             <div class="col-12">
               <label for="name" class="form-label">Name</label>
@@ -69,7 +69,6 @@
               <label for="roleId" class="form-label">Role</label>
               <select class="form-control" id="roleId" name="roleId" required>
                 <option value="" disabled selected>Select a role</option>
-                <!-- Roles will be populated here -->
               </select>
               <div class="invalid-feedback">Role is required.</div>
             </div>
@@ -88,19 +87,19 @@
 <script>
   async function fetchRoles() {
       try {
-          const response = await fetch('/roles/'); // Adjust the URL according to your routing
+          const response = await fetch('/roles/'); 
           
           if (!response.ok) {
               throw new Error('Network response was not ok');
           }
           
-          const roles = await response.json(); // Parse the JSON from the response
+          const roles = await response.json(); 
 
           const roleSelect = document.getElementById('roleId');
           roles.forEach(role => {
               const option = document.createElement('option');
-              option.value = role.id; // Assuming 'id' is the role's unique identifier
-              option.textContent = role.name; // Assuming 'name' is the role's display name
+              option.value = role.id; 
+              option.textContent = role.name; 
               roleSelect.appendChild(option);
           });
       } catch (error) {
@@ -108,6 +107,5 @@
       }
   }
 
-  // Call the function to fetch roles when the page loads
   window.onload = fetchRoles;
 </script>
