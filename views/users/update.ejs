@@ -1,0 +1,78 @@
+<div>
+  <h1>Update User Profile</h1>
+  <a href="/dashboard" class="btn btn-primary">Back</a>
+</div>
+
+<div class="flex d-flex justify-content-center">
+  <div class="card" style="width: 18rem">
+    <!-- Display current profile picture -->
+    <img
+      src="<%= userData.photoProfile %>"
+      class="card-img-top"
+      alt="Profile Picture"
+    />
+
+    <div class="card-body">
+      <h5 class="card-title">Edit User Info</h5>
+
+      <!-- Form for updating userData profile -->
+      <form action="/dashboard/<%= userData.id %>/edit?_method=PATCH" method="POST" enctype="multipart/form-data">
+        <!-- Pre-filled Name input -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            value="<%= userData.name %>"
+            required
+          />
+        </div>
+
+        <!-- Pre-filled Email input -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            value="<%= userData.email %>"
+            required
+          />
+        </div>
+
+        <!-- Pre-filled Phone Number input -->
+        <div class="mb-3">
+          <label for="phoneNumber" class="form-label">Phone Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="phoneNumber"
+            name="phoneNumber"
+            value="<%= userData.phoneNumber %>"
+            required
+          />
+        </div>
+
+        <!-- File input for updating profile picture -->
+        <div class="mb-3">
+          <label for="photoProfile" class="form-label"
+            >Update Profile Picture</label
+          >
+          <input
+            type="file"
+            class="form-control"
+            id="photoProfile"
+            name="photoProfile"
+            accept="image/*"
+          />
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </form>
+    </div>
+  </div>
+</div>

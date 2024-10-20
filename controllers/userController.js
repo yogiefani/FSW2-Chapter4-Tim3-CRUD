@@ -38,7 +38,6 @@ async function getUserById(req, res) {
 
 async function createUserPage(req, res) {
   try {
-    console.log("here");
     res.render("users/create", {
       title: "Create User",
       layout: "layouts/template",
@@ -51,6 +50,26 @@ async function createUserPage(req, res) {
     });
   }
 }
+
+async function updateUserPage(req, res) {
+  try {
+    const userData = await user.findByPk(req.params.id);
+
+
+    res.render("users/update", {
+      title: `Update User ${userData.name}`,
+      userData,
+      layout: "layouts/template",
+    });
+  } catch (err) {
+    res.render("error", {
+      title: "Error",
+      error: err.message,
+      layout: "layouts/template",
+    });
+  }
+}
+
 
 const createUser = async (req, res) => {
   try {
@@ -107,7 +126,8 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const getId = req.params.id;
-    const { name, email, phoneNumber, photoProfile } = req.body;
+    const { name, email, phoneNumber, roleId } = req.body; // Removed photoProfile from destructuring
+    const file = req.file;
 
     const userToUpdate = await user.findByPk(getId);
 
@@ -118,26 +138,41 @@ const updateUser = async (req, res) => {
       });
     }
 
-    const updateUser = await userToUpdate.update({
+    let photoProfileUrl = userToUpdate.photoProfile; // Keep the current photoProfile URL by default
+
+    // If a file is uploaded, upload it and set the new photoProfile URL
+    if (file) {
+      const split = file.originalname.split(".");
+      const ext = split[split.length - 1];
+      const filename = split[0];
+
+      const uploadedImage = await imagekit.upload({
+        file: file.buffer,
+        fileName: `Profile-${filename}-${Date.now()}.${ext}`,
+      });
+
+      photoProfileUrl = uploadedImage.url; // Update photoProfileUrl with the new image URL
+    }
+
+    // Update the user with the provided details
+    const updatedUser = await userToUpdate.update({
       name,
       email,
       phoneNumber,
-      photoProfile,
+      photoProfile: photoProfileUrl, // Use the determined photoProfile URL
+      roleId,
     });
 
-    res.status(200).json({
-      status: true,
-      message: "Update User Successfully!",
-      data: updateUser,
-    });
+    res.redirect(`/dashboard?updated=success&createdEntity=${updatedUser.name}`);
   } catch (err) {
     return res.status(500).json({
       status: false,
-      message: "An error occurred while fetching users",
+      message: "An error occurred while updating the user",
       error: err.message,
     });
   }
 };
+
 
 async function deleteUser(req, res) {
   const id = req.params.id;
@@ -173,4 +208,5 @@ module.exports = {
   updateUser,
   deleteUser,
   createUserPage,
+  updateUserPage,
 };
