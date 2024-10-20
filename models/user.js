@@ -43,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       photoProfile: {
         type: DataTypes.TEXT,
+        // defaultValue:
         validate: {
           isUrl: true,
         },
