@@ -10,16 +10,34 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       phoneNumber: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true 
       },
       photoProfile: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        validate: {
+          isUrl: true 
+        }
+      },
+      roleId: { 
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'roles',
+          key: 'id' 
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL' 
       },
       createdAt: {
         allowNull: false,

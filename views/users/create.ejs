@@ -1,0 +1,112 @@
+<main>
+  <div class="container">
+    <div class="py-5 text-center">
+      <h2>Create New User</h2>
+      <p class="lead">Fill in the form below to create a new user.</p>
+    </div>
+
+    <div class="row g-5 justify-content-center">
+      <div class="col-md-8 form-card">
+        <h4 class="mb-3">New User Form</h4>
+        <form action="/dashboard" method="POST" enctype="multipart/form-data">
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="name" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                name="name"
+                placeholder="Enter name"
+                required
+              />
+              <div class="invalid-feedback">Name is required.</div>
+            </div>
+
+            <div class="col-12">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Enter email"
+                required
+              />
+              <div class="invalid-feedback">A valid email is required.</div>
+            </div>
+
+            <div class="col-12">
+              <label for="phoneNumber" class="form-label">Phone Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="phoneNumber"
+                name="phoneNumber"
+                placeholder="Enter phone number"
+                required
+              />
+              <div class="invalid-feedback">
+                A valid phone number is required (10-15 digits).
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="photoProfile" class="form-label">Photo Profile</label>
+              <input
+                type="file"
+                class="form-control"
+                id="photoProfile"
+                name="photoProfile"
+                accept="image/*"
+                required
+              />
+              <div class="invalid-feedback">
+                Please select a valid image file.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="roleId" class="form-label">Role</label>
+              <select class="form-control" id="roleId" name="roleId" required>
+                <option value="" disabled selected>Select a role</option>
+              </select>
+              <div class="invalid-feedback">Role is required.</div>
+            </div>
+          </div>
+
+          <hr class="my-4" />
+          <button class="w-100 btn btn-primary btn-lg btn-custom" type="submit">
+            Create
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  async function fetchRoles() {
+    try {
+      const response = await fetch("/roles/");
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const roles = await response.json();
+
+      const roleSelect = document.getElementById("roleId");
+      roles.forEach((role) => {
+        const option = document.createElement("option");
+        option.value = role.id;
+        option.textContent = role.name;
+        roleSelect.appendChild(option);
+      });
+    } catch (error) {
+      console.error("Error fetching roles:", error);
+    }
+  }
+
+  window.onload = fetchRoles;
+</script>
