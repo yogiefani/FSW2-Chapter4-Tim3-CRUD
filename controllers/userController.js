@@ -48,22 +48,47 @@ async function createUserPage(req, res) {
     }
   }
 
-const createUser = async (req, res) => {
+  const createUser = async (req, res) => {
     try {
-        const { name, email, phoneNumber, photoProfile } = req.body;
+        const { name, email, phoneNumber } = req.body;
+        const file = req.file; // Assuming you're using middleware like multer to handle file uploads
 
-        if (!name || !email || !phoneNumber || !photoProfile) {
-            return res.status(404).json({
+        // Validate required fields
+        if (!name || !email || !phoneNumber || !file) {
+            return res.status(400).json({
                 status: false,
-                message: "name, email, phone, or photoProfile are required!",
+                message: "name, email, phoneNumber, and photoProfile are required!",
             });
         }
 
+        // Process the uploaded file
+        const split = file.originalname.split(".");
+        const ext = split[split.length - 1];
+        const filename = split[0];
+
+        // Upload image to server (using ImageKit or your chosen service)
+        const uploadedImage = await imagekit.upload({
+            file: file.buffer,
+            fileName: `Profile-${filename}-${Date.now()}.${ext}`
+        });
+
+        console.log(uploadedImage);
+
+        if (!uploadedImage) {
+            return res.status(400).json({
+                status: false,
+                message: "Failed to add user data because the file is not defined",
+                isSuccess: false,
+                data: null,
+            });
+        }
+
+        // Create a new user with the uploaded image URL
         const newUser = await user.create({
             name,
             email,
             phoneNumber,
-            photoProfile,
+            photoProfile: uploadedImage.url, // Assuming `url` contains the image URL from ImageKit
         });
 
         return res.status(201).json({
@@ -74,11 +99,12 @@ const createUser = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             status: false,
-            message: "An error occurred while fetching users",
+            message: "An error occurred while creating the user",
             error: err.message,
         });
     }
 };
+
 
 const updateUser = async (req, res) => {
     try {
