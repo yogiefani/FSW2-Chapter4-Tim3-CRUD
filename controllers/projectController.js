@@ -3,17 +3,12 @@ const { project } = require("../models");
 const getAllProjects = async (req, res) => {
     try {
         const projects = await project.findAll();
-        res.status(200).json({
-            status: "Succeed",
-            message: "Get all projects successfully",
-            isSuccess: true,
-            data: projects,
+        res.render("projects/index", {
+            title: "Dashboard Admin",
+            projects,
         });
     } catch (err) {
-        res.status(500).json({
-            status: "Failed",
-            message: "Internal server error",
-            isSuccess: false,
+        res.render("error", {
             error: err.message,
         });
     }
@@ -23,40 +18,29 @@ async function getProjectById(req, res) {
     const id = req.params.id;
     try {
         const project = await project.findByPk(id);
-        if (!project) {
-            return res.status(404).json({
-                status: "Failed",
-                message: "Can't find spesific id project",
-                isSuccess: false,
-                data: null,
-            });
-        }
-        res.status(200).json({
-            status: "Success",
-            message: "Successfully obtained project data",
-            isSuccess: true,
-            data: { project },
+        res.render("projects/detail", {
+            title: `Project Profile ${Project.name}`,
+            project,
+            layout: "layouts/template",
         });
-    } catch (error) {
-        res.status(500).json({
-            status: "Failed",
-            message: "Failed to get project data",
-            isSuccess: false,
-            data: null,
-            error: error.message,
+    } catch (err) {
+        res.render("error", {
+            title: "Error",
+            error: "Cannot find project data",
+            layout: "layouts/template",
         });
     }
 }
 
 const createProject = async (req, res) => {
     try{
-        const { name, description, startAt, endAt } = req.body
+        const { name, description, startAt, endAt } = req.body;
 
         if(!name || !description || !startAt || !endAt){
             return res.status(404).json({
                 status: false,
                 "message": "name, description, startAt, or endAt are required!"
-            })
+            });
         }
 
         const newProject = await project.create({
@@ -64,13 +48,13 @@ const createProject = async (req, res) => {
             description,
             startAt,
             endAt
-        })
+        });
 
         return res.status(201).json({
             status: true,
             message: "Create New Project Successfully!",
             data: newProject
-        })
+        });
 
     } catch (err) {
         return res.status(500).json({
@@ -83,8 +67,8 @@ const createProject = async (req, res) => {
 
 const updateProject = async (req, res) => {
     try{
-        const getId = req.params.id
-        const {name, description, startAt, endAt} = req.body
+        const getId = req.params.id;
+        const {name, description, startAt, endAt} = req.body;
 
         const projectToUpdate = await project.findByPk(getId);
 
@@ -100,7 +84,7 @@ const updateProject = async (req, res) => {
             description,
             startAt,
             endAt
-        })
+        });
 
         res.status(200).json({
             status: true,
@@ -124,7 +108,7 @@ async function deleteProject(req, res) {
         if (!project) {
             return res.status(404).json({
                 status: "Failed",
-                message: "Can't find spesific id project",
+                message: "Can't find specific id project",
                 isSuccess: false,
                 data: null,
             });
@@ -132,12 +116,7 @@ async function deleteProject(req, res) {
 
         await project.destroy();
 
-        res.status(200).json({
-            status: "Success",
-            message: "Successfully delete project data",
-            isSuccess: true,
-            data: { project },
-        });
+        res.redirect("/dashboard?deleted=success");
     } catch (error) {
         res.status(500).json({
             status: "Failed",
