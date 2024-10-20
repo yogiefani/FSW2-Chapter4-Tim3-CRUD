@@ -92,11 +92,7 @@ const createUser = async (req, res) => {
       roleId,
     });
 
-    return res.status(201).json({
-      status: true,
-      message: "Create New User Successfully!",
-      data: newUser,
-    });
+    return res.redirect("/dashboard?created=success");
   } catch (err) {
     return res.status(500).json({
       status: false,
