@@ -34,15 +34,16 @@ async function getUserById(req, res) {
 
 async function createUserPage(req, res) {
     try {
+        console.log("here")
       res.render("users/create", {
         title: "Create User",
-        layout: "layouts/template",
+        // layout: "layouts/template",
       });
     } catch (err) {
       res.render("error", {
         title: "Error",
         error: err.message,
-        layout: "layouts/template",
+        // layout: "layouts/template",
       });
     }
   }
