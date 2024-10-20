@@ -5,6 +5,7 @@ const EJSLayouts = require("express-ejs-layouts");
 
 // Import routes
 const userRoute = require("./routes/userRoute");
+const roleRoute = require("./routes/roleRoute");
 
 dotenv.config();
 
@@ -41,6 +42,7 @@ app.use(EJSLayouts);
 app.set("layout", "layouts/template");
 
 app.use("/users", userRoute);
+app.use("/roles", roleRoute)
 
 // Middleware to handle page not found
 app.use((req, res, next) => {
