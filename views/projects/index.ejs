@@ -13,13 +13,13 @@
     <tbody>
         <% projects.map((project) => { %>
         <tr>
-            <td><a href="/dashboard/<%= project.id %>"><%= project.name %></a></td>
+            <td><a href="/projects/<%= project.id %>"><%= project.name %></a></td>
             <td><%= project.description %></td>
             <td><%= project.startAt %></td>
             <td><%= project.endAt %></td>
             <td class="flex d-flex gap-3">
                 <a
-                    href="/dashboard/<%= project.id %>/edit"
+                    href="/projects/<%= project.id %>/edit"
                     class="border px-2 pt-0.5 pb-1 border-warning text-white bg-warning rounded"
                 >
                     <svg
@@ -40,7 +40,7 @@
                     </svg>
                 </a>
                 <form
-                    action="/dashboard/<%= project.id %>?_method=DELETE"
+                    action="/projects/<%= project.id %>?_method=DELETE"
                     method="POST"
                     class="d-inline"
                 >
