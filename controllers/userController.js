@@ -2,8 +2,6 @@ const { user } = require("../models");
 const imagekit = require("../lib/imagekit");
 const createdEntity = "User";
 
-
-
 const getAllUsers = async (req, res) => {
   try {
     const users = await user.findAll();
@@ -55,7 +53,6 @@ async function updateUserPage(req, res) {
   try {
     const userData = await user.findByPk(req.params.id);
 
-
     res.render("users/update", {
       title: `Update User ${userData.name}`,
       userData,
@@ -70,11 +67,10 @@ async function updateUserPage(req, res) {
   }
 }
 
-
 const createUser = async (req, res) => {
   try {
     const { name, email, phoneNumber, roleId } = req.body;
-    const file = req.file; 
+    const file = req.file;
 
     // Validate required fields
     // if (!name || !email || !phoneNumber || !file) {
@@ -113,7 +109,9 @@ const createUser = async (req, res) => {
       roleId,
     });
 
-    return res.redirect(`/dashboard?created=success&createdEntity=${createdEntity}`);
+    return res.redirect(
+      `/dashboard?created=success&createdEntity=${createdEntity}`
+    );
   } catch (err) {
     return res.status(500).json({
       status: false,
@@ -126,7 +124,7 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const getId = req.params.id;
-    const { name, email, phoneNumber, roleId } = req.body; // Removed photoProfile from destructuring
+    const { name, email, phoneNumber, roleId } = req.body;
     const file = req.file;
 
     const userToUpdate = await user.findByPk(getId);
@@ -138,9 +136,8 @@ const updateUser = async (req, res) => {
       });
     }
 
-    let photoProfileUrl = userToUpdate.photoProfile; // Keep the current photoProfile URL by default
+    let photoProfileUrl = userToUpdate.photoProfile;
 
-    // If a file is uploaded, upload it and set the new photoProfile URL
     if (file) {
       const split = file.originalname.split(".");
       const ext = split[split.length - 1];
@@ -151,19 +148,20 @@ const updateUser = async (req, res) => {
         fileName: `Profile-${filename}-${Date.now()}.${ext}`,
       });
 
-      photoProfileUrl = uploadedImage.url; // Update photoProfileUrl with the new image URL
+      photoProfileUrl = uploadedImage.url;
     }
 
-    // Update the user with the provided details
     const updatedUser = await userToUpdate.update({
       name,
       email,
       phoneNumber,
-      photoProfile: photoProfileUrl, // Use the determined photoProfile URL
+      photoProfile: photoProfileUrl,
       roleId,
     });
 
-    res.redirect(`/dashboard?updated=success&createdEntity=${updatedUser.name}`);
+    res.redirect(
+      `/dashboard?updated=success&createdEntity=${updatedUser.name}`
+    );
   } catch (err) {
     return res.status(500).json({
       status: false,
@@ -172,7 +170,6 @@ const updateUser = async (req, res) => {
     });
   }
 };
-
 
 async function deleteUser(req, res) {
   const id = req.params.id;
