@@ -32,6 +32,21 @@ async function getUserById(req, res) {
     }
 }
 
+async function createUserPage(req, res) {
+    try {
+      res.render("users/create", {
+        title: "Create User",
+        layout: "layouts/template",
+      });
+    } catch (err) {
+      res.render("error", {
+        title: "Error",
+        error: err.message,
+        layout: "layouts/template",
+      });
+    }
+  }
+
 const createUser = async (req, res) => {
     try {
         const { name, email, phoneNumber, photoProfile } = req.body;
@@ -132,4 +147,5 @@ module.exports = {
     createUser,
     updateUser,
     deleteUser,
+    createUserPage,
 };
