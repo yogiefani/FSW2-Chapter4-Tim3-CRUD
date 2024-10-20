@@ -2,12 +2,12 @@ const { role } = require("../models");
 
 const getAllRoles = async (req, res) => {
   try {
-    const roles = await role.findAll();
+    let roleData = await role.findAll();
     res.status(200).json({
       status: "Succeed",
       message: "Get all roles successfully",
       isSuccess: true,
-      data: roles,
+      data: roleData,
     });
   } catch (err) {
     res.status(500).json({
@@ -22,8 +22,8 @@ const getAllRoles = async (req, res) => {
 async function getRoleById(req, res) {
   const id = req.params.id;
   try {
-    const role = await role.findByPk(id);
-    if (!role) {
+    let roleData = await role.findByPk(id);
+    if (!roleData) {
       return res.status(404).json({
         status: "Failed",
         message: "Can't find spesific id role",
@@ -35,7 +35,7 @@ async function getRoleById(req, res) {
       status: "Success",
       message: "Successfully obtained role data",
       isSuccess: true,
-      data: { role },
+      data: { roleData },
     });
   } catch (error) {
     res.status(500).json({
@@ -52,10 +52,10 @@ const createRole = async (req, res) => {
   try {
     const { name, description } = req.body;
 
-    if (!name || description) {
-      return res.status(404).json({
+    if (!name || !description) {
+      return res.status(400).json({
         status: false,
-        message: "name, description!",
+        message: "name, description are required!",
       });
     }
 
@@ -81,8 +81,8 @@ const createRole = async (req, res) => {
 async function deleteRole(req, res) {
   const id = req.params.id;
   try {
-    const role = await role.findByPk(id);
-    if (!role) {
+    let roleData = await role.findByPk(id);
+    if (!roleData) {
       return res.status(404).json({
         status: "Failed",
         message: "Can't find spesific id role",
@@ -91,13 +91,13 @@ async function deleteRole(req, res) {
       });
     }
 
-    await role.destroy();
+    await roleData.destroy();
 
     res.status(200).json({
       status: "Success",
       message: "Successfully delete role data",
       isSuccess: true,
-      data: { role },
+      data: { roleData },
     });
   } catch (error) {
     res.status(500).json({
