@@ -1,5 +1,7 @@
 const { user } = require("../models");
 const imagekit = require("../lib/imagekit");
+const createdEntity = "User";
+
 
 
 const getAllUsers = async (req, res) => {
@@ -92,7 +94,7 @@ const createUser = async (req, res) => {
       roleId,
     });
 
-    return res.redirect("/dashboard?created=success");
+    return res.redirect(`/dashboard?created=success&createdEntity=${createdEntity}`);
   } catch (err) {
     return res.status(500).json({
       status: false,

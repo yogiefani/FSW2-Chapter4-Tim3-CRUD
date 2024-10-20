@@ -15,11 +15,12 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get("created");
+    const createdEntity=urlParams.get("createdEntity")
 
     if (status === "success") {
         Swal.fire({
             title: "Success!",
-            text: "Task has been successfully created!",
+            text: `${createdEntity} has been successfully created!`,
             icon: "success",
             confirmButtonText: "OK",
         });

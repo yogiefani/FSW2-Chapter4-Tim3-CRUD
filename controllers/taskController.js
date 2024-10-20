@@ -1,4 +1,6 @@
 const { tasks } = require("../models");
+const createdEntity = "Task";
+
 
 async function updateTaskPage(req, res) {
   try {
@@ -52,7 +54,7 @@ async function createTask(req, res) {
       projectId,
     });
 
-    return res.redirect("/dashboard?created=success");
+    return res.redirect(`/dashboard?created=success&createdEntity=${createdEntity}`);
   } catch (err) {
     return res.render("error", {
       status: false,
