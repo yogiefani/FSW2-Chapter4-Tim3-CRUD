@@ -6,6 +6,7 @@ const methodOverride = require('method-override');
 
 // Import routes
 const userRoute = require("./routes/userRoute");
+const taskRoute = require("./routes/taskRoute");
 
 dotenv.config();
 
@@ -44,6 +45,8 @@ app.get("/", async (req, res) => {
 app.use(methodOverride('_method'));
 
 app.use("/dashboard", userRoute);
+
+app.use("/tasks", taskRoute);
 
 // Middleware to handle page not found and redirect to /error
 app.use((req, res, next) => {
