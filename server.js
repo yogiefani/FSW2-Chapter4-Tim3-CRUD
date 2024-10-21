@@ -3,6 +3,8 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 const EJSLayouts = require("express-ejs-layouts");
 const methodOverride = require('method-override');
+const flash = require('express-flash');
+const session = require('express-session');
 
 // Import routes
 const userRoute = require("./routes/userRoute");
@@ -26,6 +28,12 @@ app.use(express.static(`${__dirname}/public`));
 app.set("view engine", "ejs");
 app.use(EJSLayouts);
 app.set("layout", "layouts/template");
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true
+}));
+app.use(flash());
 
 // Health Check
 app.get("/", async (req, res) => {
