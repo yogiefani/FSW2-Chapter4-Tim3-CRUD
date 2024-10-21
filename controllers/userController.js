@@ -4,7 +4,9 @@ const createdEntity = "User";
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await user.findAll();
+    const users = await user.findAll({
+      order: [["id", "ASC"]]
+    });
     res.render("users/index", {
       title: "Dashboard Admin",
       users,
@@ -186,7 +188,7 @@ async function deleteUser(req, res) {
 
     await User.destroy();
 
-    res.redirect("/dashboard?deleted=success");
+    res.redirect(`/dashboard?deleted=success&createdEntity=${createdEntity}`);
   } catch (error) {
     res.status(500).json({
       status: "Failed",

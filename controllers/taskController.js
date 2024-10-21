@@ -86,7 +86,7 @@ async function updateTask(req, res) {
       projectId,
     });
 
-    res.redirect("/dashboard?updated=success");
+    res.redirect(`/dashboard?updated=success&createdEntity=${updateTask.name}`);
   } catch (err) {
     return res.status(500).json({
       status: false,
