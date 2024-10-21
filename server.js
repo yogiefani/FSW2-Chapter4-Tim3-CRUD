@@ -6,9 +6,9 @@ const methodOverride = require('method-override');
 
 // Import routes
 const userRoute = require("./routes/userRoute");
+const projectRoute = require("./routes/projectRoute");
 const taskRoute = require("./routes/taskRoute");
 const roleRoute = require("./routes/roleRoute");
-
 
 dotenv.config();
 
@@ -32,7 +32,7 @@ app.get("/", async (req, res) => {
     try {
         res.render("landingPage",{
             title: "WorkSync.",
-        })
+        });
     } catch (error) {
         res.status(500).json({
             status: "Failed",
@@ -47,11 +47,9 @@ app.get("/", async (req, res) => {
 app.use(methodOverride('_method'));
 
 app.use("/dashboard", userRoute);
-
+app.use("/projects", projectRoute);
 app.use("/tasks", taskRoute);
-
 app.use("/roles", roleRoute);
-
 
 // Middleware to handle page not found and redirect to /error
 app.use((req, res, next) => {
