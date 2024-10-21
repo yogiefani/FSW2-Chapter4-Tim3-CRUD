@@ -1,0 +1,119 @@
+<div>
+  <h1>Update User Profile</h1>
+  <a href="/dashboard" class="btn btn-primary">Back</a>
+</div>
+
+<div class="flex d-flex justify-content-center">
+  <div class="card" style="width: 18rem">
+    <img
+      src="<%= userData.photoProfile %>"
+      class="card-img-top"
+      alt="Profile Picture"
+    />
+
+    <div class="card-body">
+      <h5 class="card-title">Edit User Info</h5>
+
+      <form
+        action="/dashboard/<%= userData.id %>/edit?_method=PATCH"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            value="<%= userData.name %>"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            value="<%= userData.email %>"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="phoneNumber" class="form-label">Phone Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="phoneNumber"
+            name="phoneNumber"
+            value="<%= userData.phoneNumber %>"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="photoProfile" class="form-label"
+            >Update Profile Picture</label
+          >
+          <input
+            type="file"
+            class="form-control"
+            id="photoProfile"
+            name="photoProfile"
+            accept="image/*"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="roleId" class="form-label">Role</label>
+          <select class="form-control" id="roleId" name="roleId" required>
+            <option value="" disabled>Select a role</option>
+          </select>
+          <div class="invalid-feedback">Role is required.</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function fetchRoles() {
+    try {
+      const response = await fetch("/roles/");
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const roles = await response.json();
+
+      const currentUserRoleId = "<%= userData.roleId %>";
+
+      console.log("Current User Role ID:", currentUserRoleId);
+      console.log("Roles:", roles);
+
+      const roleSelect = document.getElementById("roleId");
+      roles.forEach((role) => {
+        const option = document.createElement("option");
+        option.value = role.id;
+        option.textContent = role.name;
+
+        if (role.id == currentUserRoleId) {
+          option.selected = true;
+          console.log(`Selected role: ${role.name}`);
+        }
+
+        roleSelect.appendChild(option);
+      });
+    } catch (error) {
+      console.error("Error fetching roles:", error);
+    }
+  }
+
+  window.onload = fetchRoles;
+</script>
