@@ -56,7 +56,42 @@ async function getTaskById(req, res) {
     }
 }
 
+async function deleteTaskById(req, res) {
+    const id = req.params.id;
+    try {
+        const task = await Task.findByPk(id);
+
+        if (Task) {
+            await Task.destroy({
+                where: {
+                    id: id,
+                },
+            });
+
+            res.status(200).json({
+                statusCode: "200",
+                message: "Success get Task data",
+                isSuccess: true,
+                data: { task },
+            });
+        } else {
+            res.status(404).json({
+                statusCode: "404",
+                message: "Task Not Found!",
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            statusCode: "500",
+            message: "Failed to get Task data",
+            isSuccess: false,
+            error: error.message,
+        });
+    }
+}
+
 module.exports = {
     getAllTask, 
     getTaskById,
+    deleteTaskById,
 };
