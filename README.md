@@ -10,13 +10,16 @@
 
 </br>
 
-### ABOUT THIS PROJECT
-WIP
+## ABOUT THIS WorkSync Admin
 
-### ERD
-<p align="center"><a href="https://nodejs.org/en" target="_blank"><img src="./public/images/fsw2-chapter4-team3.png" width="400" alt="ERD.png"></a></p>
+WorkSync adalah aplikasi yang dibangun untuk membantu mempermudah pengguna dalam mengelola pekerjaan tim. WorkSync dibangun menggunakan Express.JS, PostgreSQL, dan EJS.
 
-### API
+## DATABASE ERD
+
+<p align="center"><a href="https://nodejs.org/en" target="_blank"><img src="./public/images/fsw2-chapter4-team3.png" width="800" alt="ERD.png"></a></p>
+
+## API
+
 <h6>Users</h6>
 <p>1. getAllUsers and getUserById</p>
 <p>2. createUser</p>
@@ -38,7 +41,8 @@ WIP
 <p>3. updateTask</p>
 <p>4. deleteTask</p>
 
-### CONTRIBUTOR
+## CONTRIBUTOR
+
 <p>1. Yogi Efani Yancandra</p>
 <p>2. Abdi Pranawa Satura Ardana</p>
 <p>3. Fauzan Saputra</p>
