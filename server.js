@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const EJSLayouts = require("express-ejs-layouts");
+const methodOverride = require('method-override');
 
 // Import routes
 const userRoute = require("./routes/userRoute");
@@ -13,16 +14,22 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(morgan());
+
+app.use(express.static(`${__dirname}/public`));
+
+// View Engine
+app.set("view engine", "ejs");
+app.use(EJSLayouts);
+app.set("layout", "layouts/template");
 
 // Health Check
 app.get("/", async (req, res) => {
     try {
-        res.status(200).json({
-            status: "Succeed",
-            message: "Ping successfully",
-            isSuccess: true,
+        res.render("landingPage",{
+            title: "WorkSync.",
         });
     } catch (error) {
         res.status(500).json({
@@ -34,22 +41,17 @@ app.get("/", async (req, res) => {
     }
 });
 
-app.use(express.static(`${__dirname}/public`));
+// Configure method-override to use _method query parameter
+app.use(methodOverride('_method'));
 
-// View Engine
-app.set("view engine", "ejs");
-app.use(EJSLayouts);
-app.set("layout", "layouts/template");
+app.use("/dashboard", userRoute);
+app.use("/roles", roleRoute);
 
-app.use("/users", userRoute);
-app.use("/roles", roleRoute)
-
-// Middleware to handle page not found
+// Middleware to handle page not found and redirect to /error
 app.use((req, res, next) => {
-    res.status(404).json({
-        status: "Failed",
-        message: "API not found !",
-        isSuccess: false,
+    res.status(404).render('error', {
+        title: 'Error',
+        error: '404 Page not found',
     });
 });
 
