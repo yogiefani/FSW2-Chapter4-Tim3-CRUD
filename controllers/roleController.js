@@ -29,7 +29,7 @@ async function getRoleById(req, res) {
   } catch (err) {
     res.render("error", {
       title: "Error",
-      error: "Cannot find user data",
+      error: "Cannot find role data",
       layout: "layouts/template",
     });
   }
@@ -37,28 +37,44 @@ async function getRoleById(req, res) {
 
 const roleCreateForm = async (req, res) => {
   try {
-    res.status(200).render("role/create", {
+    res.status(200).render("roles/create", {
       title: "Create New Role",
+      layout: "layouts/template",
     });
   } catch (err) {
     console.error("Error showing create form:", err);
-    res.status(500).redirect("/role");
+    res.status(500).render("error", {
+      title: "Error",
+      error: "Failed to load create form",
+      layout: "layouts/template",
+    });
   }
 };
 
 const roleUpdateForm = async (req, res) => {
   try {
-    const role = await role.findByPk(req.params.id);
-    if (!role) {
-      return res.status(404).redirect("/role");
+    const roleData = await role.findByPk(req.params.id);
+
+    if (!roleData) {
+      return res.status(404).render("error", {
+        title: "Error",
+        error: "Role not found",
+        layout: "layouts/template",
+      });
     }
-    res.status(200).render("role/update", {
+
+    res.status(200).render("roles/update", {
       title: "Edit Role",
-      role,
+      roleData,
+      layout: "layouts/template",
     });
   } catch (err) {
     console.error("Error showing edit form:", err);
-    res.status(500).redirect("/role");
+    res.status(500).render("error", {
+      title: "Error",
+      error: "Failed to load update form",
+      layout: "layouts/template",
+    });
   }
 };
 
@@ -67,10 +83,11 @@ const createRole = async (req, res) => {
     const { name, description } = req.body;
 
     if (!name || !description) {
-      return res.status(400).render("role/create", {
+      return res.status(400).render("roles/create", {
         title: "Create New Role",
         error: "Name and description are required!",
         formData: req.body,
+        layout: "layouts/template",
       });
     }
 
@@ -79,37 +96,46 @@ const createRole = async (req, res) => {
       description,
     });
 
-    res.status(201).redirect("/role");
+    res.status(201).redirect("/roles");
   } catch (err) {
     console.error("Error creating role:", err);
-    res.status(500).render("role/create", {
+    res.status(500).render("roles/create", {
       title: "Create New Role",
       error: "Failed to create role",
       formData: req.body,
+      layout: "layouts/template",
     });
   }
 };
 
 const updateRole = async (req, res) => {
   try {
-    const getId = req.params.id;
+    const roleId = req.params.id;
     const { name, description } = req.body;
 
-    const roleToUpdate = await role.findByPk(getId);
+    const roleData = await role.findByPk(roleId);
 
-    if (!roleToUpdate) {
-      return res.status(404).redirect("/role");
+    if (!roleData) {
+      return res.status(404).render("error", {
+        title: "Error",
+        error: "Role not found",
+        layout: "layouts/template",
+      });
     }
 
-    await roleToUpdate.update({
+    await roleData.update({
       name,
       description,
     });
 
-    res.status(200).redirect("/role");
+    res.status(200).redirect("/roles");
   } catch (err) {
     console.error("Error updating role:", err);
-    res.status(500).redirect(`/role/update/${req.params.id}`);
+    res.status(500).render("error", {
+      title: "Error",
+      error: "Failed to update role",
+      layout: "layouts/template",
+    });
   }
 };
 
