@@ -225,7 +225,7 @@ async function createTask(req, res) {
       projectId,
     });
 
-    return res.redirect('/tasks');
+    return res.redirect(`/tasks?created=success&createdEntity=${createdEntity}`);
   } catch (err) {
     return res.render("error", {
       status: false,
