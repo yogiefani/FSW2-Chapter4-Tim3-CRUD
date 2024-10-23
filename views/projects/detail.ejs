@@ -5,10 +5,12 @@
 <div class="flex d-flex justify-content-center">
     <div class="card" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title"><%= project.name %></h5>
-            <p class="card-text"><%= project.description %></p>
-            <p class="card-text"><%= project.startAt %></p>
-            <p class="card-text"><%= project.endAt %></p>
+            <h5 class="card-title"><%= Project.name %></h5>
+            <p class="card-text"><%= Project.description %></p>
+            <p class="fw-semibold m-0 p-0">Project Start</p>
+            <p class="card-text"><%= formattedStartAt %></p>
+            <p class="fw-semibold m-0 p-0">Project End</p>
+            <p class="card-text"><%= formattedEndAt %></p>
         </div>
     </div>
 </div>

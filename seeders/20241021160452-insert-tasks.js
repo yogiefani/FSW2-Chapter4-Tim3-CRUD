@@ -34,7 +34,7 @@ module.exports = {
         id: 4,
         name: "Testing",
         description: "Perform unit and integration testing",
-        userId: 4,
+        userId: 1,
         projectId: 2,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -43,7 +43,7 @@ module.exports = {
         id: 5,
         name: "Deployment",
         description: "Deploy application to staging environment",
-        userId: 5,
+        userId: 2,
         projectId: 3,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -52,7 +52,7 @@ module.exports = {
         id: 6,
         name: "Bug Fixing",
         description: "Fix bugs identified during testing",
-        userId: 6,
+        userId: 3,
         projectId: 3,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -61,7 +61,7 @@ module.exports = {
         id: 7,
         name: "Code Review",
         description: "Review code quality and standards",
-        userId: 7,
+        userId: 1,
         projectId: 4,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -70,7 +70,7 @@ module.exports = {
         id: 8,
         name: "Database Optimization",
         description: "Optimize queries for better performance",
-        userId: 8,
+        userId: 2,
         projectId: 4,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -79,7 +79,7 @@ module.exports = {
         id: 9,
         name: "API Documentation",
         description: "Document all available API endpoints",
-        userId: 9,
+        userId: 3,
         projectId: 5,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -88,7 +88,7 @@ module.exports = {
         id: 10,
         name: "User Acceptance Testing",
         description: "Conduct UAT with stakeholders",
-        userId: 10,
+        userId: 1,
         projectId: 5,
         createdAt: new Date(),
         updatedAt: new Date()

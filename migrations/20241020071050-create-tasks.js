@@ -18,12 +18,22 @@ module.exports = {
         type: Sequelize.TEXT
       },
       userId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        onDelete: 'SET NULL'
       },
       projectId: {
+        references: {
+          model: 'projects',
+          key: 'id'
+        },
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

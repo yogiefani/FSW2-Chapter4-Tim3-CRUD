@@ -11,12 +11,24 @@
         </tr>
     </thead>
     <tbody>
-        <% projects.map((project) => { %>
+        <% projects.map((project) => {
+            const startAtDate = new Date(project.startAt);
+            const endAtDate = new Date(project.endAt);
+            const options = { 
+                weekday: 'long', 
+                day: '2-digit', 
+                month: '2-digit', 
+                year: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            };
+            const formattedStartAt = startAtDate.toLocaleDateString('en-GB', options).replace(',', '');
+            const formattedEndAt = endAtDate.toLocaleDateString('en-GB', options).replace(',', ''); %>
         <tr>
             <td><a href="/projects/<%= project.id %>"><%= project.name %></a></td>
             <td><%= project.description %></td>
-            <td><%= project.startAt %></td>
-            <td><%= project.endAt %></td>
+            <td><%= formattedStartAt %></td>
+            <td><%= formattedEndAt %></td>
             <td class="flex d-flex gap-3">
                 <a
                     href="/projects/<%= project.id %>/edit"

@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "roleId",
         as: "role",
       });
+      user.hasMany(models.tasks, {
+        foreignKey: "userId",
+        as: "tasks",
+      });
     }
   }
   user.init(

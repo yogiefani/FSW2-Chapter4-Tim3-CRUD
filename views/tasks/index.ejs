@@ -27,8 +27,8 @@
         <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>Start At</th>
-            <th>End At</th>
+            <th>UserId</th>
+            <th>ProjectId</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -37,11 +37,11 @@
         <tr>
             <td><a href="/tasks/detail/<%= task.id %>"><%= task.name %></a></td>
             <td><%= task.description %></td>
-            <td><%= task.startAt %></td>
-            <td><%= task.endAt %></td>
+            <td><%= task.user ? task.user.name : "No User Assigned" %></td>
+            <td><%= task.project.name %></td>
             <td class="flex d-flex gap-3">
                 <a
-                    href="/allTasks/<%= task.id %>/edit"
+                    href="/Tasks/update/<%= task.id %>/"
                     class="border px-2 pt-0.5 pb-1 border-warning text-white bg-warning rounded"
                 >
                     <svg
