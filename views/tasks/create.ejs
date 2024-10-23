@@ -1,0 +1,52 @@
+<main>
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>Create New Record</h2>
+            <p class="lead">Fill in the form below to create a new entry in the database.</p>
+        </div>
+
+        <div class="row g-5 justify-content-center">
+            <div class="col-md-8 form-card">
+                <h4 class="mb-3">New Entry Form</h4>
+                <form action="/tasks" method="POST">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+                            <div class="invalid-feedback">
+                                Name is required.
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" placeholder="Enter description" required></textarea>
+                            <div class="invalid-feedback">
+                                Description is required.
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="userId" class="form-label">User ID</label>
+                            <input type="number" class="form-control" id="userId" name="userId" placeholder="Enter user ID" required>
+                            <div class="invalid-feedback">
+                                User ID is required.
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="projectId" class="form-label">Project ID</label>
+                            <input type="number" class="form-control" id="projectId" name="projectId" placeholder="Enter project ID" required>
+                            <div class="invalid-feedback">
+                                Project ID is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+                    <button class="w-100 btn btn-primary btn-lg btn-custom" type="submit">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>

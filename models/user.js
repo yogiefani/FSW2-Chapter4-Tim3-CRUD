@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
     /**
@@ -11,22 +9,64 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      user.belongsTo(models.role, {
+        foreignKey: "roleId",
+        as: "role",
+      });
+      user.hasMany(models.tasks, {
+        foreignKey: "userId",
+        as: "tasks",
+      });
     }
   }
-  user.init({
-    name: DataTypes.STRING,
-    email: {
-    type: DataTypes.STRING,
-    unique: true
+  user.init(
+    {
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true,
+        },
+      },
+      phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isNumeric: true,
+          len: [10, 15],
+        },
+      },
+      photoProfile: {
+        type: DataTypes.TEXT,
+        // defaultValue:
+        validate: {
+          isUrl: true,
+        },
+      },
+      roleId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "roles",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
+      },
     },
-    phoneNumber: {
-    type: DataTypes.STRING,
-    unique: true
-    },
-    photoProfile: DataTypes.TEXT
-  }, {
-    sequelize,
-    modelName: 'user',
-  });
+    {
+      sequelize,
+      modelName: "user",
+    }
+  );
   return user;
 };

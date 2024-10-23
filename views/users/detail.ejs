@@ -1,0 +1,14 @@
+<div>
+    <h1>User Profile</h1>
+    <a href="/dashboard" class="btn btn-primary">Back</a>
+</div>
+<div class="flex d-flex justify-content-center">
+    <div class="card" style="width: 18rem;">
+        <img src="<%= User.photoProfile %>" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title"><%= User.name %></h5>
+            <p class="card-text"><%= User.email %></p>
+            <p class="card-text"><%= User.phoneNumber %></p>
+        </div>
+    </div>
+</div>
