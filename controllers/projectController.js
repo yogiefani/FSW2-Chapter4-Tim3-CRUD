@@ -1,5 +1,7 @@
 const { project } = require("../models");
 
+const createdEntity = "Project";
+
 const getAllProjects = async (req, res) => {
     try {
         const projects = await project.findAll();
@@ -67,13 +69,7 @@ const createProject = async (req, res) => {
             name,
             description
         })
-
-        return res.status(201).json({
-            status: true,
-            message: "Create New Project Successfully!",
-            data: newProject
-        })
-
+    return res.redirect(`/projects?created=success&createdEntity=${createdEntity}`);
     } catch (err) {
         return res.status(500).json({
             status: false,
