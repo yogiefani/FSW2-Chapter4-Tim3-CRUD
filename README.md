@@ -19,27 +19,54 @@ WorkSync adalah aplikasi yang dibangun untuk membantu mempermudah pengguna dalam
 <p align="center"><a href="https://nodejs.org/en" target="_blank"><img src="./public/images/fsw2-chapter4-team3.png" width="800" alt="ERD.png"></a></p>
 
 ## API
-
 <h6>Users</h6>
-<p>1. getAllUsers and getUserById</p>
-<p>2. createUser</p>
-<p>3. updateUser</p>
-<p>4. deleteUser </p>
+
+| Method | URL API | Description | By |
+|----------|----------|----------|----------|
+| get    | /dashboard   | display all users   | nuril   |
+| get   | /dashboard/:id   | displaying specific user for detail information   | nuril   |
+| get    | /dashboard/create   | form for create new user   | fauzan   |
+| post   | /dashboard/create   | create new user   | fauzan   |
+| get    | /dashboard/update/:id   | form for update of specific user by id   | fauzan   |
+| patch    | /dashboard/:id/edit   | update data of specific user by id  | fauzan   |
+| delete    | /dashboard/:id   | for delete specific user   | nuril   |
+
 <h6>Roles</h6>
-<p>1. getAllRoles and getRoleById</p>
-<p>2. createRole</p>
-<p>3. updateRole</p>
-<p>4. deleteRole </p>
-<h6>Projects</h6>
-<p>1. getAllProjects and getProjectById</p>
-<p>2. createProject</p>
-<p>3. updateProject</p>
-<p>4. deleteProject </p>
+
+| Method | URL API | Description | By |
+|----------|----------|----------|----------|
+| get    | /roles   | display all roles   |abdi   |
+| get   | /roles/:id   | displaying specific roles for detail information   |abdi   |
+| get    | /roles/create   | form for create new rples  | zainal   |
+| post   | /roles   | create new roles   | zainal   |
+| get    | /roles/update/:id   | form for update of specific roles by id   | zainal   |
+| patch    | /roles/:id   | update data of specific roles by id  | zainal   |
+| delete    | /roles/:id   | for delete specific roles   |abdi   |
+
 <h6>Tasks</h6>
-<p>1. getAllTasks and getTaskById</p>
-<p>2. createTask</p>
-<p>3. updateTask</p>
-<p>4. deleteTask</p>
+
+| Method | URL API | Description | By |
+|----------|----------|----------|----------|
+| get    | /tasks   | display all tasks   | melinda   |
+| get   | /tasks/detail/:id   | displaying specific task for detail information   | melinda   |
+| get   | /tasks/search  | displaying specific task from id in search query  | melinda   |
+| get    | /tasks/create   | form for create new task   | muria   |
+| post   | /   | create new task   | muria   |
+| get    | /tasks/update/:id   | form for update of specific task by id   | muria   |
+| put   | /tasks/:id  | update data of specific task by id  | muria   |
+| delete    | /tasks/delete/:id   | for delete specific task   | melinda   |
+
+<h6>Project</h6>
+
+| Method | URL API | Description | By |
+|----------|----------|----------|----------|
+| get    | /projects   | display all projects   | Rafif   |
+| get   | /projects/:id   | displaying specific project for detail information   | Rafif   |
+| get    | /projects/create   | form for create new project   | Yogi   |
+| post   | /   | create new project   | Yogi   |
+| get    | /projects/update/:id   | form for update of specific project by id   | Yogi   |
+| patch   | /projects/:id  | update data of specific project by id  | Yogi   |
+| delete    | /projects/:id   | for delete specific project   | Rafif   |
 
 ## CONTRIBUTOR
 
