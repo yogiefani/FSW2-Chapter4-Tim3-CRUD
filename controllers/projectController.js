@@ -17,10 +17,24 @@ const getAllProjects = async (req, res) => {
 async function getProjectById(req, res) {
     const id = req.params.id;
     try {
-        const project = await project.findByPk(id);
+        const Project = await project.findByPk(id);
+        const startAtDate = new Date(Project.startAt);
+        const endAtDate = new Date(Project.endAt);
+        const options = { 
+            weekday: 'long', 
+            day: '2-digit', 
+            month: '2-digit', 
+            year: 'numeric', 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        };
+        const formattedStartAt = startAtDate.toLocaleDateString('en-GB', options).replace(',', '');
+        const formattedEndAt = endAtDate.toLocaleDateString('en-GB', options).replace(',', '');
         res.render("projects/detail", {
             title: `Project Profile ${Project.name}`,
-            project,
+            Project,
+            formattedStartAt,
+            formattedEndAt,
             layout: "layouts/template",
         });
     } catch (err) {
