@@ -1,4 +1,5 @@
 const { project } = require("../models");
+const createdEntity = "project";
 
 const getAllProjects = async (req, res) => {
     try {
@@ -118,7 +119,7 @@ const updateProject = async (req, res) => {
 async function deleteProject(req, res) {
     const id = req.params.id;
     try {
-        const project = await project.findByPk(id);
+        const Project = await project.findByPk(id);
         if (!project) {
             return res.status(404).json({
                 status: "Failed",
@@ -128,9 +129,9 @@ async function deleteProject(req, res) {
             });
         }
 
-        await project.destroy();
+        await Project.destroy();
 
-        res.redirect("/dashboard?deleted=success");
+        res.redirect(`/projects?deleted=success&createdEntity=${Project.name}`);
     } catch (error) {
         res.status(500).json({
             status: "Failed",
