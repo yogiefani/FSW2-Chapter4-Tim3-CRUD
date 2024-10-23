@@ -3,12 +3,16 @@ const { project } = require("../models");
 const getAllProjects = async (req, res) => {
     try {
         const projects = await project.findAll();
-        res.status(200).json({
-            status: "Succeed",
-            message: "Get all projects successfully",
-            isSuccess: true,
-            data: projects,
-        });
+        // res.status(200).json({
+        //     status: "Succeed",
+        //     message: "Get all projects successfully",
+        //     isSuccess: true,
+        //     data: projects,
+        // });
+        res.render("projects/create", {
+            title: "Dashboard Admin Project",
+            projects,
+          });
     } catch (err) {
         res.status(500).json({
             status: "Failed",
@@ -55,7 +59,7 @@ const createProject = async (req, res) => {
         if(!name || !description){
             return res.status(404).json({
                 status: false,
-                "message": "name, or desctiption are required!"
+                "message": "name, or description are required!"
             })
         }
 
@@ -145,4 +149,4 @@ async function deleteProject(req, res) {
     }
 }
 
-module.exports = { getAllProjects, getProjectById, createProject, updateUser, deleteProject };
+module.exports = { getAllProjects, getProjectById, createProject, updateProject, deleteProject };
