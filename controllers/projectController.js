@@ -79,39 +79,52 @@ const createProject = async (req, res) => {
     }
 }
 
-const updateProject = async (req, res) => {
-    try{
-        const getId = req.params.id
-        const {name, description} = req.body
-
-        const projectToUpdate = await project.findByPk(getId);
-
-        if (!projectToUpdate) {
-            return res.status(404).json({
-                status: false,
-                message: "project not found!",
-            });
-        }
-
-        const updateProject = await projectToUpdate.update({
-            name,
-            description
-        })
-
-        res.status(200).json({
-            status: true,
-            message: "Update Project Successfully!",
-            data: updateProject
+async function updateProject(req, res) {
+    try {
+      const getId = req.params.id;
+      const { name, description } = req.body;
+  
+      const projectToUpdate = await project.findByPk(getId);
+  
+      if (!projectToUpdate) {
+        return res.status(404).json({
+          status: false,
+          message: "Project not found!",
         });
-
+      }
+  
+      const updateProject = await projectToUpdate.update({
+        name,
+        description,
+      });
+  
+      res.redirect("/projects?updated=success");
     } catch (err) {
-        return res.status(500).json({
-            status: false,
-            message: "An error occurred while fetching projects",
-            error: err.message,
-        });
+      return res.status(500).json({
+        status: false,
+        message: "An error occurred while fetching projects",
+        error: err.message,
+      });
     }
-}
+  }
+
+  async function updateProjectPage(req, res) {
+    try {
+      const projectData = await project.findByPk(req.params.id);
+  
+      res.render("projects/update", {
+        title: `Update Project ${projectData.name}`,
+        projectData,
+        layout: "layouts/template",
+      });
+    } catch (err) {
+      res.render("error", {
+        title: "Error",
+        error: err.message,
+        layout: "layouts/template",
+      });
+    }
+  }
 
 async function deleteProject(req, res) {
     const id = req.params.id;
@@ -145,4 +158,4 @@ async function deleteProject(req, res) {
     }
 }
 
-module.exports = { getAllProjects, getProjectById, createProject, updateProject, deleteProject };
+module.exports = { getAllProjects, getProjectById, createProject, updateProject, updateProjectPage,deleteProject };

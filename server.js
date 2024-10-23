@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const EJSLayouts = require("express-ejs-layouts");
+const methodOverride = require('method-override');
 
 // Import routes
 const userRoute = require("./routes/userRoute");
@@ -41,6 +42,8 @@ app.use(express.static(`${__dirname}/public`));
 app.set("view engine", "ejs");
 app.use(EJSLayouts);
 app.set("layout", "layouts/template");
+
+app.use(methodOverride('_method'));
 
 app.use("/users", userRoute);
 app.use("/projects", projectRoute);
