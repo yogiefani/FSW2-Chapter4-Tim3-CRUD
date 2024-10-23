@@ -1,11 +1,18 @@
-const { user } = require("../models");
+const { user, role } = require("../models");
 const imagekit = require("../lib/imagekit");
 const createdEntity = "User";
 
 const getAllUsers = async (req, res) => {
   try {
     const users = await user.findAll({
-      order: [["id", "ASC"]]
+      order: [["id", "ASC"]],
+      include: [
+        {
+          model: role,
+          as: "role",
+          attributes: ["name"],
+        },
+      ],
     });
     res.render("users/index", {
       title: "Dashboard Admin",
@@ -21,7 +28,15 @@ const getAllUsers = async (req, res) => {
 async function getUserById(req, res) {
   const id = req.params.id;
   try {
-    const User = await user.findByPk(id);
+    const User = await user.findByPk(id, {
+      include: [
+        {
+          model: role,
+          as: "role", 
+          attributes: ["name"], 
+        },
+      ],
+    });
     res.render("users/detail", {
       title: `User Profile ${User.name}`,
       User,
