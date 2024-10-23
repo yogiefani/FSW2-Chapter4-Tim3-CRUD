@@ -88,13 +88,14 @@
 <script>
   async function fetchRoles() {
     try {
-      const response = await fetch("/roles/");
+      const response = await fetch("/roles/entity");
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
 
-      const roles = await response.json();
+      const result = await response.json();
+      const roles = result.data; // Access the 'data' field
 
       const roleSelect = document.getElementById("roleId");
       roles.forEach((role) => {
