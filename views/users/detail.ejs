@@ -2,6 +2,10 @@
     <h1>User Profile</h1>
     <a href="/dashboard" class="btn btn-primary">Back</a>
 </div>
+<!-- <div class="d-flex mb-3 justify-content-between">
+    <h4>User Profile</h4>
+    <a href="/dashboard" class="btn btn-success">Create</a>
+</div> -->
 <div class="flex d-flex justify-content-center">
     <div class="card" style="width: 18rem;">
         <img src="<%= User.photoProfile %>" class="card-img-top" alt="...">
@@ -9,6 +13,9 @@
             <h5 class="card-title"><%= User.name %></h5>
             <p class="card-text"><%= User.email %></p>
             <p class="card-text"><%= User.phoneNumber %></p>
+            <p class="card-text"><%= User.role.name ? User.role.name : 'No Role Assigned' %></p>
+
+
         </div>
     </div>
 </div>
