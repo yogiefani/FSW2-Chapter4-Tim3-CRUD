@@ -84,15 +84,16 @@
 <script>
   async function fetchRoles() {
     try {
-      const response = await fetch("/roles/");
+      const response = await fetch("/roles/entity");
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
 
-      const roles = await response.json();
+      const result = await response.json();
+      const roles = result.data; 
 
-      const currentUserRoleId = "<%= userData.roleId %>";
+      const currentUserRoleId = "<%= userData.roleId %>"; 
 
       console.log("Current User Role ID:", currentUserRoleId);
       console.log("Roles:", roles);
@@ -104,7 +105,7 @@
         option.textContent = role.name;
 
         if (role.id == currentUserRoleId) {
-          option.selected = true;
+          option.selected = true; 
           console.log(`Selected role: ${role.name}`);
         }
 

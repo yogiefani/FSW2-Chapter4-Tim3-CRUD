@@ -1,7 +1,7 @@
 const { role } = require("../models");
 const createdEntity = "role";
 
-const getAllRoles = async (req, res) => {
+const  getAllRoles = async (req, res) => {
   try {
     const rolesData = await role.findAll({
       order: [["id", "ASC"]],
@@ -16,6 +16,24 @@ const getAllRoles = async (req, res) => {
     });
   }
 };
+
+const getAllRolesJSON = async (req, res) => {
+  try {
+    const rolesData = await role.findAll({
+      order: [["id", "ASC"]],
+    });
+    res.status(200).json({
+      success: true,
+      data: rolesData,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
 
 async function getRoleById(req, res) {
   const id = req.params.id;
@@ -174,4 +192,5 @@ module.exports = {
   roleCreateForm,
   roleUpdateForm,
   deleteRole,
+  getAllRolesJSON
 };
